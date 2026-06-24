@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Produto {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  nome           String
+  descricao      String
+  preco          Float
+  precoMin       Float?
+  categoria      String
+  imageUrl       String?
+  destaque       Boolean  @default(false)
+  ativo          Boolean  @default(true)
+  personalizavel Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  itensPedido ItemPedido[]
+
+  @@map("produtos")
+}
+
+model Pedido {
+  id              String   @id @default(cuid())
+  stripeSessionId String   @unique
+  emailCliente    String
+  nomeCliente     String
+  telefone        String?
+  totalAmount     Float
+  currency        String   @default("eur")
+  status          String   @default("PENDENTE")
+  notas           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  itens ItemPedido[]
+
+  @@map("pedidos")
+}
+
+model ItemPedido {
+  id             String  @id @default(cuid())
+  pedidoId       String
+  produtoId      String
+  preco          Float
+  quantidade     Int     @default(1)
+  personalizacao String?
+
+  pedido  Pedido  @relation(fields: [pedidoId], references: [id])
+  produto Produto @relation(fields: [produtoId], references: [id])
+
+  @@map("itens_pedido")
+}

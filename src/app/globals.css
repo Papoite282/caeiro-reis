@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-nunito: 'Nunito', sans-serif;
+    --font-poppins: 'Poppins', sans-serif;
+    --background: 0 0% 100%;
+    --foreground: 240 20% 28%;
+    --border: 340 40% 90%;
+  }
+  * { @apply border-border; }
+  body { @apply bg-fundo text-texto font-corpo antialiased; }
+  h1,h2,h3,h4,h5 { @apply font-titulo; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl
+           bg-rosa px-6 py-3 font-titulo font-bold text-white text-sm tracking-wide
+           shadow-[0_4px_14px_0_rgba(255,133,162,0.4)]
+           transition-all duration-200 hover:bg-rosa-escuro hover:-translate-y-0.5
+           active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rosa;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl
+           border-2 border-rosa/30 bg-white px-6 py-3
+           font-titulo font-bold text-rosa text-sm tracking-wide
+           transition-all duration-200 hover:bg-rosa-claro hover:border-rosa;
+  }
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl
+           bg-[#25D366] px-6 py-3 font-titulo font-bold text-white text-sm
+           shadow-[0_4px_14px_0_rgba(37,211,102,0.4)]
+           transition-all duration-200 hover:bg-[#1DA851] hover:-translate-y-0.5;
+  }
+  .card-produto {
+    @apply relative bg-white rounded-3xl border-2 border-transparent
+           shadow-[0_2px_20px_0_rgba(0,0,0,0.06)]
+           hover:border-rosa/30 hover:shadow-[0_4px_30px_0_rgba(255,133,162,0.15)]
+           transition-all duration-300 overflow-hidden cursor-pointer;
+  }
+  .badge-categoria {
+    @apply inline-flex items-center rounded-full px-3 py-1
+           text-xs font-titulo font-bold tracking-wide;
+  }
+  .secao-titulo {
+    @apply font-titulo font-black text-titulo leading-tight;
+  }
+}
+
+/* Gradiente festivo de fundo */
+.bg-festivo {
+  background: linear-gradient(135deg, #FFF0F5 0%, #F0F8FF 50%, #F5FFF0 100%);
+}
+.bg-hero {
+  background: linear-gradient(135deg, #FFD6E0 0%, #D4F0FA 40%, #EAE4FF 70%, #C8F0DA 100%);
+}
+
+/* Confetti dots decorativos */
+.dots-bg {
+  background-image: radial-gradient(#FF85A2 1px, transparent 1px),
+                    radial-gradient(#7EC8E3 1px, transparent 1px);
+  background-size: 30px 30px, 60px 60px;
+  background-position: 0 0, 15px 15px;
+  opacity: 0.08;
+}
