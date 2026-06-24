@@ -11,10 +11,50 @@
     --background: 0 0% 100%;
     --foreground: 240 20% 28%;
     --border: 340 40% 90%;
+    /* Borders laterais — replicados do site original */
+    --side-w: clamp(40px, 11vw, 210px);
+    --c1: #f4a8cd;
+    --c2: #82c9ea;
+    --c3: #b8dd69;
+    --c4: #bca1e6;
+    --c5: #7ad6d0;
   }
   * { @apply border-border; }
-  body { @apply bg-fundo text-texto font-corpo antialiased; }
+  body {
+    @apply bg-white text-texto font-corpo antialiased overflow-x-hidden;
+  }
   h1,h2,h3,h4,h5 { @apply font-titulo; }
+}
+
+/* ─── BORDERS LATERAIS ANIMADOS (replicados do caeiro-e-reis.pt) ─── */
+.side-border {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: var(--side-w);
+  z-index: 30;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c1));
+  background-size: 100% 430%;
+  animation: sideFlow 10s ease-in-out infinite;
+}
+.side-border.left  { left: 0; }
+.side-border.right { right: 0; animation-delay: -5s; }
+
+@keyframes sideFlow {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Conteúdo respeita a largura dos borders */
+.site-wrapper {
+  margin-left: var(--side-w);
+  margin-right: var(--side-w);
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+  background: white;
 }
 
 @layer components {
@@ -52,15 +92,13 @@
   }
 }
 
-/* Gradiente festivo de fundo */
+/* Gradientes de fundo */
 .bg-festivo {
   background: linear-gradient(135deg, #FFF0F5 0%, #F0F8FF 50%, #F5FFF0 100%);
 }
 .bg-hero {
   background: linear-gradient(135deg, #FFD6E0 0%, #D4F0FA 40%, #EAE4FF 70%, #C8F0DA 100%);
 }
-
-/* Confetti dots decorativos */
 .dots-bg {
   background-image: radial-gradient(#FF85A2 1px, transparent 1px),
                     radial-gradient(#7EC8E3 1px, transparent 1px);
