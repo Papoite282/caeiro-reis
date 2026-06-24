@@ -11,7 +11,6 @@
     --background: 0 0% 100%;
     --foreground: 240 20% 28%;
     --border: 340 40% 90%;
-    /* Borders laterais — replicados do site original */
     --side-w: clamp(40px, 11vw, 210px);
     --c1: #f4a8cd;
     --c2: #82c9ea;
@@ -20,17 +19,14 @@
     --c5: #7ad6d0;
   }
   * { @apply border-border; }
-  body {
-    @apply bg-white text-texto font-corpo antialiased overflow-x-hidden;
-  }
+  body { @apply bg-white text-texto font-corpo antialiased overflow-x-hidden; }
   h1,h2,h3,h4,h5 { @apply font-titulo; }
 }
 
-/* ─── BORDERS LATERAIS ANIMADOS (replicados do caeiro-e-reis.pt) ─── */
+/* ─── BORDERS LATERAIS ANIMADOS ─── */
 .side-border {
   position: fixed;
-  top: 0;
-  bottom: 0;
+  top: 0; bottom: 0;
   width: var(--side-w);
   z-index: 30;
   pointer-events: none;
@@ -47,7 +43,19 @@
   100% { background-position: 0% 0%; }
 }
 
-/* Conteúdo respeita a largura dos borders */
+/* ─── MASCOT FIXA CANTO INFERIOR DIREITO ─── */
+.mascot-fixed {
+  position: fixed;
+  bottom: 0;
+  right: var(--side-w);
+  z-index: 25;
+  pointer-events: none;
+  width: clamp(70px, 9vw, 160px);
+  transform: translateX(38%);
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.15));
+}
+
+/* ─── SITE WRAPPER ─── */
 .site-wrapper {
   margin-left: var(--side-w);
   margin-right: var(--side-w);
@@ -58,6 +66,7 @@
 }
 
 @layer components {
+  /* BOTÕES */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-2xl
            bg-rosa px-6 py-3 font-titulo font-bold text-white text-sm tracking-wide
@@ -75,14 +84,47 @@
     @apply inline-flex items-center justify-center gap-2 rounded-2xl
            bg-[#25D366] px-6 py-3 font-titulo font-bold text-white text-sm
            shadow-[0_4px_14px_0_rgba(37,211,102,0.4)]
-           transition-all duration-200 hover:bg-[#1DA851] hover:-translate-y-0.5;
+           transition-all duration-200 hover:bg-[#1DA851] hover:-translate-y-1;
   }
+
+  /* CARD PRODUTO — efeito pop-up replicado do caeiro-e-reis.pt */
   .card-produto {
-    @apply relative bg-white rounded-3xl border-2 border-transparent
-           shadow-[0_2px_20px_0_rgba(0,0,0,0.06)]
-           hover:border-rosa/30 hover:shadow-[0_4px_30px_0_rgba(255,133,162,0.15)]
-           transition-all duration-300 overflow-hidden cursor-pointer;
+    @apply relative bg-[rgba(247,250,252,0.88)] rounded-[20px]
+           border-2 border-[#79c9ef]/40
+           shadow-[0_10px_22px_rgba(0,0,0,0.08)]
+           overflow-hidden cursor-pointer
+           will-change-transform;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
   }
+  .card-produto:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 18px 34px rgba(0,0,0,0.14);
+    border-color: rgba(121,201,239,0.95);
+    filter: brightness(1.02);
+  }
+  .card-produto:active {
+    transform: translateY(-1px) scale(1.005);
+  }
+
+  /* CARD CATEGORIA — mesmo efeito pop mais colorido */
+  .card-categoria {
+    @apply bg-[rgba(247,250,252,0.88)] rounded-[20px]
+           border-2 border-[#79c9ef]/30
+           shadow-[0_10px_22px_rgba(0,0,0,0.07)]
+           p-5 text-center cursor-pointer
+           will-change-transform;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
+  }
+  .card-categoria:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 18px 34px rgba(0,0,0,0.13);
+    border-color: rgba(244,168,205,0.9);
+    filter: brightness(1.02);
+  }
+  .card-categoria:active {
+    transform: translateY(-1px) scale(1.005);
+  }
+
   .badge-categoria {
     @apply inline-flex items-center rounded-full px-3 py-1
            text-xs font-titulo font-bold tracking-wide;
@@ -104,5 +146,14 @@
                     radial-gradient(#7EC8E3 1px, transparent 1px);
   background-size: 30px 30px, 60px 60px;
   background-position: 0 0, 15px 15px;
-  opacity: 0.08;
+  opacity: 0.06;
 }
+
+/* Estrelinhas decorativas */
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+.star { animation: twinkle 2s ease-in-out infinite; }
+.star:nth-child(2) { animation-delay: 0.5s; }
+.star:nth-child(3) { animation-delay: 1s; }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Image from "next/image";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CarrinhoProvider } from "@/components/carrinho/CarrinhoProvider";
@@ -20,11 +21,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-PT">
       <body className="min-h-screen bg-[#e9edf1]">
-        {/* Borders laterais animados — replicados do site original */}
-        <div className="side-border left" aria-hidden="true" />
+
+        {/* Borders laterais animados */}
+        <div className="side-border left"  aria-hidden="true" />
         <div className="side-border right" aria-hidden="true" />
 
-        {/* Wrapper central — todo o conteúdo aqui */}
+        {/* Mascot estática — canto inferior direito, entre o border e o conteúdo */}
+        <div className="mascot-fixed" aria-hidden="true">
+          <Image
+            src="/mascot.png"
+            alt="Mascote Caeiro & Reis"
+            width={160}
+            height={160}
+            className="w-full h-auto"
+            priority
+          />
+        </div>
+
+        {/* Wrapper central */}
         <div className="site-wrapper flex flex-col min-h-screen">
           <CarrinhoProvider>
             <Header />
@@ -32,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
           </CarrinhoProvider>
         </div>
+
       </body>
     </html>
   );
